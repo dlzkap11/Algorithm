@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _01_Algorithm;
+using System;
 
 namespace Algorithm
 {
@@ -6,6 +7,10 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
+            Board board = new Board();
+            board.Initialize();
+
+
 
             Console.CursorVisible = false;
 
@@ -37,7 +42,6 @@ namespace Algorithm
                 //로직
 
                 //렌더링
-
 
                 Console.SetCursorPosition(0, 0);
 
