@@ -31,10 +31,66 @@ namespace _01_Algorithm
             _size = size;
 
             //이진트리 미로
-            GenerateByBinaryTree();
+            //GenerateByBinaryTree();
+            GenrateBySideWinder();
         }
+        void GenrateBySideWinder()
+        {
+            //일단 길을 다 막는 작업
+            for (int y = 0; y < _size; y++)
+            {
+                for (int x = 0; x < _size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        _tile[y, x] = TileType.Wall;
+                    else
+                        _tile[y, x] = TileType.Empty;
 
+                }
+            }
 
+            Random rand = new Random();
+            
+
+            for (int y = 0; y < _size; y++)
+            {
+                int count = 1;
+                for (int x = 0; x < _size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        continue;
+
+                    if (y == _size - 2 && x == _size - 2)
+                        continue;
+
+                    if (y == _size - 2)
+                    {
+                        _tile[y, x + 1] = TileType.Empty;
+                        continue;
+                    }
+
+                    if (x == _size - 2)
+                    {
+                        _tile[y + 1, x] = TileType.Empty;
+                        continue;
+                    }
+
+                    //우측 혹은 아래로 1/2확률로 길을 뚫음
+                    if (rand.Next(0, 2) == 0)
+                    {
+                        _tile[y, x + 1] = TileType.Empty;
+                        count++;
+                    }
+                    else
+                    {
+                        int randomindex = rand.Next(0, count);
+                        _tile[y + 1, x - randomindex * 2] = TileType.Empty;
+                        count = 1;
+                    }
+
+                }
+            }
+        }
 
         void GenerateByBinaryTree()
         {
@@ -57,7 +113,6 @@ namespace _01_Algorithm
             {
                 for (int x = 0; x < _size; x++)
                 {
-
                     if (x % 2 == 0 || y % 2 == 0)
                         continue;
 
@@ -89,7 +144,7 @@ namespace _01_Algorithm
                 }
             }
         }
-
+        
         public void Render()
         {
             ConsoleColor prevColor = Console.ForegroundColor;
