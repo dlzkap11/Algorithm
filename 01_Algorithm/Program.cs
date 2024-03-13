@@ -10,7 +10,7 @@ namespace Algorithm
             Board board = new Board();
             Player player = new Player();
             board.Initialize(25, player);
-            player.Initalize(1, 1, board.Size - 2, board.Size - 2, board);
+            player.Initalize(1, 1, board);
 
             Console.CursorVisible = false;
 

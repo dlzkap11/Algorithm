@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 namespace _01_Algorithm
 {
 
-    internal class Board
+    class Board
     {
         const char CIRCLE = '\u25cf';
         public TileType[,] Tile { get; private set; }
         public int Size { get; private set; }
         
+
+        public int DestX { get; private set; }
+        public int DestY { get; private set; }
 
         Player _player;
 
@@ -33,6 +36,9 @@ namespace _01_Algorithm
 
             Tile = new TileType[size, size];
             Size = size;
+
+            DestX = size - 2;
+            DestY = size - 2;
 
             //이진트리 미로
             //GenerateByBinaryTree();
@@ -161,8 +167,10 @@ namespace _01_Algorithm
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
                     }
+                    else if (y == DestY && x == DestX)
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     else
-                    Console.ForegroundColor = GetTileColor(Tile[y, x]);
+                        Console.ForegroundColor = GetTileColor(Tile[y, x]);
 
                     Console.Write(CIRCLE);
                 }
