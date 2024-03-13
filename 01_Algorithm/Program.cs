@@ -8,9 +8,9 @@ namespace Algorithm
         static void Main(string[] args)
         {
             Board board = new Board();
-            board.Initialize(25);
-
-
+            Player player = new Player();
+            board.Initialize(25, player);
+            player.Initalize(1, 1, board.Size - 2, board.Size - 2, board);
 
             Console.CursorVisible = false;
 
@@ -19,8 +19,6 @@ namespace Algorithm
             
 
             int lastTick = 0;
-
-            
 
             while (true)
             {
@@ -31,20 +29,21 @@ namespace Algorithm
 
                 if (currenTick - lastTick < WAIT_TICK)
                     continue;
+                int deltaTick = currenTick - lastTick;
                 lastTick = currenTick;
 
                 #endregion
 
 
-                // FPS -> 프레임 퍼 세컨드 (60프레임... 30프레임 ㄷㄷㄷ)
+                //FPS -> 프레임 퍼 세컨드 (60프레임... 30프레임 ㄷㄷㄷ)
 
-                // 입력
+                //입력
 
-                //로직
+                //로직 (데이더 변환)
+                player.Update(deltaTick);
 
-                
-                Console.SetCursorPosition(0, 0);
                 //렌더링
+                Console.SetCursorPosition(0, 0);              
                 board.Render();
 
 
