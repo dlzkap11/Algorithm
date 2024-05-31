@@ -14,7 +14,6 @@ namespace _01_Algorithm
         public int X;
     }
 
-
     class Player
     {
         public int PosX { get; set; }
@@ -89,6 +88,7 @@ namespace _01_Algorithm
                 return;
 
             _sumTick += deltaTick; 
+
             if (_sumTick >= MOVE_TICK)
             {
                 _sumTick = 0;

@@ -24,16 +24,15 @@ namespace Algorithm
             {
 
                 #region 프레임 관리
-                int currenTick = System.Environment.TickCount;  //시스템이 시작된 이후 시간 ms
+                int currentTick = Environment.TickCount & Int32.MaxValue;  //시스템이 시작된 이후 시간 ms
                 //if 경과한 시간이 1/30초 보다 작으면
 
-                if (currenTick - lastTick < WAIT_TICK)
+                if (currentTick - lastTick < WAIT_TICK)
                     continue;
-                int deltaTick = currenTick - lastTick;
-                lastTick = currenTick;
+                int deltaTick = currentTick - lastTick;
+                lastTick = currentTick;
 
                 #endregion
-
 
                 //FPS -> 프레임 퍼 세컨드 (60프레임... 30프레임 ㄷㄷㄷ)
 
@@ -47,8 +46,7 @@ namespace Algorithm
                 board.Render();
 
 
-            }
-            
+            }           
         }
     }
 }
