@@ -85,9 +85,6 @@
                     DFS2(now);
         }
 
-
-        // 1. 우선 now부터 방문
-        // 2. 예약된 곳으로 방문
         public void  BFS(int start)
         {
            
