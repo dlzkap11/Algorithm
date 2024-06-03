@@ -40,7 +40,7 @@ namespace _01_Algorithm
 
             //RightHand();
 
-            BFS();
+            //BFS();
         }
 
         void BFS()
