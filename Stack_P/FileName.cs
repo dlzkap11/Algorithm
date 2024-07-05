@@ -1,13 +1,17 @@
-﻿namespace Stack_P
+﻿using System.Runtime.InteropServices;
+
+namespace Stack_P
 {
 
     //스택 : 후입선출 (LIFO)
     //큐 : 선입선출 (FIFO)
+    //트리 = 재귀함수
 
 
     class Graph
     {
 
+        #region DFS, BFS
         int[,] adj = new int[6, 6]
         {
             {-1, 15, -1, 35, -1, -1},
@@ -50,7 +54,7 @@
                 int closest = Int32.MaxValue;
                 int now = -1;
 
-                for(int i = 0; i < 6; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     //이미 방문한 정점은 스킵
                     if (visited[i])
@@ -65,7 +69,7 @@
                 }
 
                 //다음 후보가 하나도 없다
-                if(now == -1)
+                if (now == -1)
                     break;
 
 
@@ -74,7 +78,7 @@
 
                 // 방문한 정점과 인접한 정점들을 조사
                 // 상황에 따라 발견한 최단거리를 갱신
-                for(int next = 0; next < 6; next++)
+                for (int next = 0; next < 6; next++)
                 {
                     // 연결되지 않은 정점 스킵
                     if (adj[now, next] == -1)
@@ -88,11 +92,11 @@
                     int nextDist = distance[now] + adj[now, next];
 
                     // 만약에 기존에 발견한 최단거리가 새로 조사된 최단거리보다 크면 정보를 갱신
-                    if(nextDist < distance[next])
+                    if (nextDist < distance[next])
                     {
                         distance[next] = nextDist;
                         parent[next] = now;
-                    }                   
+                    }
                 }
             }
         }
@@ -154,9 +158,9 @@
                     DFS2(now);
         }
 
-        public void  BFS(int start)
+        public void BFS(int start)
         {
-           
+
             bool[] found = new bool[6];
             int[] parent = new int[6];      //어디서 찾아왔는가
             int[] distance = new int[6];    //처음에서의 거리
@@ -170,12 +174,12 @@
             distance[start] = 0;
 
 
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 int now = queue.Dequeue();
                 Console.WriteLine(now);
 
-                for(int next = 0; next < 6; next++)
+                for (int next = 0; next < 6; next++)
                 {
                     if (adj[now, next] == 0) //인접하지 않으면 스킵
                         continue;
@@ -190,23 +194,93 @@
             }
         }
     }
+    #endregion
 
     class FileName
     {
+        static Tree<string> MakeTree()
+        {
+            Tree<string> root = new Tree<string>() { Data = "R1 개발실" };
+            {
+                Tree<string> node = new Tree<string>() { Data = "디자인팀" };
+                node.Children.Add(new Tree<string>() { Data = "전투" });
+                {
+                    Tree<string> node2 = new Tree<string>() { Data = "전문 시청팀" };
+                    node2.Children.Add(new Tree<string>() { Data = "1팀" });
+                    node2.Children.Add(new Tree<string>() { Data = "2팀" });
+                    node2.Children.Add(new Tree<string>() { Data = "3팀" });
+                    node.Children.Add(node2);
+                }
+                node.Children.Add(new Tree<string>() { Data = "경제" });
+                node.Children.Add(new Tree<string>() { Data = "스토리" });
+                root.Children.Add(node);
+
+            }
+            {
+                Tree<string> node = new Tree<string>() { Data = "프로그래밍팀" };
+                node.Children.Add(new Tree<string>() { Data = "서버" });
+                node.Children.Add(new Tree<string>() { Data = "클라" });
+                node.Children.Add(new Tree<string>() { Data = "엔진" });
+                root.Children.Add(node);
+            }
+            {
+                Tree<string> node = new Tree<string>() { Data = "아트팀" };
+                node.Children.Add(new Tree<string>() { Data = "배경" });
+                node.Children.Add(new Tree<string>() { Data = "캐릭터" });
+                node.Children.Add(new Tree<string>() { Data = "스토리" });
+                root.Children.Add(node);
+            }
+            return root;
+        }
+
+        static void PrintTree(Tree<string> root)
+        {
+            Console.WriteLine(root.Data);
+
+            foreach(Tree<string> child in root.Children)
+            {
+                PrintTree(child);
+            }
+        }
+
+        static int GetHeight(Tree<string> root)
+        {
+            int height = 0;
+
+
+            foreach(Tree<string> child in root.Children)
+            {
+                int newHeight = GetHeight(child) + 1;
+                   
+                height = Math.Max(height, newHeight); //두 값 중 더 큰 값
+            }
+
+            return height;
+        }
+
+
         static void Main(string[] args)
         {
             //DFS (Depth First Search 깊이 우선 탐색)  --> 가중치가 없을 때 사용 가능
             //BFS (Breadth First Search 너비 우선 탐색) --> 최단거리에서 많이 사용
 
-            Graph graph = new Graph();
+            //Graph graph = new Graph();
 
             //graph.DFS(3);
             //graph.DFS2(3);
             //graph.SearchAll();
 
             //graph.BFS(0);
+            //graph.Dijikstra(0);
 
-            graph.Dijikstra(0);
+            Tree<string> root = MakeTree();
+
+            PrintTree(root);
+
+
+            Console.WriteLine(GetHeight(root));
+            
         }
     }
 }
+
