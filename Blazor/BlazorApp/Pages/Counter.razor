@@ -1,0 +1,37 @@
+﻿@page "/counter"
+
+@inject BlazorApp.Data.CounterState CounterState
+
+@using System.Threading 
+
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @CounterState.Count</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-secondary" @onclick="AutoIncrement">Auto Increment</button>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        CounterState.Count = CounterState.Count + 1;
+    }
+
+    void AutoIncrement()
+    {
+        var timer = new Timer(x =>
+        {
+            InvokeAsync(() =>
+            {
+                IncrementCount();
+                StateHasChanged();
+            });
+
+        }, null, 1000, 1000);
+    }
+}

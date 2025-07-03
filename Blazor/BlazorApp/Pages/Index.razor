@@ -1,0 +1,46 @@
+﻿@page "/"
+
+@using BlazorApp.Data
+@inject IFoodService foodService
+@inject PaymentService paymentService
+
+@inject SingletonService sington
+@inject TransientService transient
+@inject ScopeService scope
+
+
+<div>
+    @foreach(var food in foodService.GetFoods())
+    {
+        <div>@food.Name</div>
+        <div>@food.Price</div>
+    }
+</div>
+
+
+<div>
+    <h1>Singleton</h1>
+    Guid: @sington.ID
+
+    <h1>Transient</h1>
+    Guid: @transient.ID
+
+    <h1>Scope</h1>
+    Guid: @scope.ID
+</div>
+
+
+
+@code{
+    //FoodService _foodService = new FoodService();
+    // 의존성이 강해짐.. 별로 좋은 방법X --> 인터페이스
+    //IFoodService _foodService = new FoodService(); 
+    // -> 여전히 new를 사용하는게 뭔가뭔가임
+    // dependency injection 활용
+
+    protected override void OnInitialized()
+    {
+      
+    }
+
+}
